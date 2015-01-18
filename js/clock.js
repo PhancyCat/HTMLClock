@@ -7,5 +7,6 @@ function getTime() {
 
    document.getElementById("time").innerHTML = d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
    setTimeout(function() {getTime();}, 1000);
+   
 }
 
