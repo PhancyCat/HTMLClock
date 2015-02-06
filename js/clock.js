@@ -1,6 +1,7 @@
 window.onload = function() {
   getTime();
   getTemp();
+  getAllAlarms();
 };
 
 
@@ -49,6 +50,7 @@ function insertAlarm (hours, mins, ampm, alarmName) {
 	div2.html(alarmName);
 	div3.html(hours + ":" + mins + ampm); 
 	$("#alarms").append(div);
+	div.id = alarmName;
 }
 
 function addAlarm() {
@@ -57,7 +59,49 @@ function addAlarm() {
 	mins = $("#mins option:selected").text();
 	ampm = $("#ampm option:selected").text();
 	alarmName = $('#alarmName').val();
-	insertAlarm(hours, mins, ampm, alarmName);
-	hideAlarmPopup();
+	
+	var AlarmObject = Parse.Object.extend("Alarm");
+	 var alarmObject = new AlarmObject();
+		alarmObject.save({"time": time,"alarmName": alarmName}, {
+		success: function(object) {
+		 	insertAlarm(hours, mins, ampm, alarmName);
+			hideAlarmPopup();
+		}
+	 });
+}
+
+function deleteAlarm() {
+	var al;
+	al = $('deleter').val();
+	deleteAl(al);
+}
+
+function deleteAl(alName) {
+	var AlarmObject = Parse.Object.extend("Alarm");
+	var query = new Parse.Query(AlarmObject);
+	query.find({
+	  success: function(results) {
+		 for (var i = 0; i < results.length; i++) { 
+		   if (results[i].get("alarmName") == alName) {
+		   	result[i].destroy({});
+		   }
+		 }
+	  }
+	});
+}
+
+function getAllAlarms() {
+	Parse.initialize("o0FiB6B8rRr6Gjpl96APRyugNxMrkVB23dbAatB3", "wTPmE1UZcLDX05KR3YLMwi8yKMIg1VDWt3v6r5AG");
+	
+	var AlarmObject = Parse.Object.extend("Alarm");
+	var query = new Parse.Query(AlarmObject);
+	query.find({
+	  success: function(results) {
+		 for (var i = 0; i < results.length; i++) { 
+		   insertAlarm(results[i].get("time"), results[i].get("alarmName"));
+		 }
+	  }
+	});
+
 }
 
