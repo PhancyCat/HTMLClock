@@ -17,6 +17,8 @@
             CLOCK
         </p>
         
+        <h1 id ="userName"></h1>
+        
         <div id="time">10:00 am</div>
         <div id="forecastLabel"></div>
         <img id="forecastIcon"></img>
@@ -132,6 +134,8 @@
 				 data-scope="https://www.googleapis.com/auth/plus.login">
 			  </span>
 			</span>
+
+
 
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js">

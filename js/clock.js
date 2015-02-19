@@ -117,12 +117,13 @@ function signinCallback(authResult) {
 		});
 		request.execute(function (res)
 		{
-			 var str = "Name:" + res['displayName'] + "<br>";
+			 var str = "Name:" + res['displayName'];
 			 document.getElementById("userName").innerHTML = str;
       });
   } else {
     console.log('Sign-in state: ' + authResult['error']);
   }
+  console.log('Callback check');
 }
 
 
