@@ -107,19 +107,9 @@ function getAllAlarms() {
 
 
 function signinCallback(authResult) {
-	if (authResult['status']['signed_in']) {
-   	document.getElementById('signinButton').setAttribute('style', 'display: none');
-   	gapi.auth.setToken(authResult);
-    
- 		var request = gapi.client.plus.people.get(
-		{
-			 'userId': 'me'
-		});
-		request.execute(function (res)
-		{
-			 var str = "Name:" + res['displayName'] + "<br>";
-			 document.getElementById("userName").innerHTML = str;
-      });
+  if (authResult['status']['signed_in']) {
+    document.getElementById('signinButton').setAttribute('style', 'display: none');
+    document.getElementById('userName')
   } else {
     console.log('Sign-in state: ' + authResult['error']);
   }
