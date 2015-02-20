@@ -1,7 +1,6 @@
 window.onload = function() {
   getTime();
   getTemp();
-  getAllAlarms();
 };
 
 
@@ -43,12 +42,12 @@ function hideAlarmPopup() {
 	$("#popup").addClass("hide");
 }
 
-function insertAlarm (hours, mins, ampm, alarmName) {
+function insertAlarm (time, alarmName) {
 	var div = $("<div/>"), div2 = $("<div id='div2' class='name'/>"), div3 = $("<div id='div3' class='time'/>");
 	div.addClass("flexable");
 	div.append(div2, [div3]);
 	div2.html(alarmName);
-	div3.html(hours + ":" + mins + ampm); 
+	div3.html(time); 
 	$("#alarms").append(div);
 	div.id = alarmName;
 }
@@ -63,9 +62,9 @@ function addAlarm() {
 	
 	var AlarmObject = Parse.Object.extend("Alarm");
 	 var alarmObject = new AlarmObject();
-		alarmObject.save({"time": time,"alarmName": alarmName}, {
+		alarmObject.save({"alarmName": alarmName, "times" : time}, {
 		success: function(object) {
-		 	insertAlarm(hours, mins, ampm, alarmName);
+		 	insertAlarm(time, alarmName);
 			hideAlarmPopup();
 		}
 	 });
@@ -99,7 +98,7 @@ function getAllAlarms() {
 	query.find({
 	  success: function(results) {
 		 for (var i = 0; i < results.length; i++) { 
-		   insertAlarm(results[i].get("time"), results[i].get("alarmName"));
+		   insertAlarm(results[i].get("times"), results[i].get("alarmName"));
 		 }
 	  }
 	});
@@ -110,6 +109,7 @@ function getAllAlarms() {
 function signinCallback(authResult) {
 	if (authResult['status']['signed_in']) {
    	document.getElementById('signinButton').setAttribute('style', 'display: none');
+      getAllAlarms();
    	gapi.auth.setToken(authResult);
    	gapi.client.load('plus', 'v1').then(makeRequest);
  		
