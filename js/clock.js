@@ -43,29 +43,29 @@ function hideAlarmPopup() {
 	$("#popup").addClass("hide");
 }
 
-function insertAlarm (times, alarmName) {
+function insertAlarm (hours, mins, ampm, alarmName) {
 	var div = $("<div/>"), div2 = $("<div id='div2' class='name'/>"), div3 = $("<div id='div3' class='time'/>");
 	div.addClass("flexable");
 	div.append(div2, [div3]);
 	div2.html(alarmName);
-	div3.html(times); 
+	div3.html(hours + ":" + mins + ampm); 
 	$("#alarms").append(div);
 	div.id = alarmName;
 }
 
 function addAlarm() {
-	var hours, mins, ampm, alarmName, times;
+	var hours, mins, ampm, alarmName, time;
 	hours = $("#hours option:selected").text();
 	mins = $("#mins option:selected").text();
 	ampm = $("#ampm option:selected").text();
 	alarmName = $('#alarmName').val();
-	times = hours + ":" + mins + ampm;
+	time = hours + ":" + mins + ampm;
 	
 	var AlarmObject = Parse.Object.extend("Alarm");
 	 var alarmObject = new AlarmObject();
-		alarmObject.save({"time": times,"alarmName": alarmName}, {
+		alarmObject.save({"time": time,"alarmName": alarmName}, {
 		success: function(object) {
-		 	insertAlarm(times, alarmName);
+		 	insertAlarm(hours, mins, ampm, alarmName);
 			hideAlarmPopup();
 		}
 	 });
