@@ -110,20 +110,23 @@ function signinCallback(authResult) {
 	if (authResult['status']['signed_in']) {
    	document.getElementById('signinButton').setAttribute('style', 'display: none');
    	gapi.auth.setToken(authResult);
-    
- 		var request = gapi.client.plus.people.get(
-		{
-			 'userId': 'me'
-		});
-		request.execute(function (res)
-		{
-			 var str = "Name:" + res['displayName'];
-			 document.getElementById("userName").innerHTML = str;
-      });
+   	gapi.client.load('plus', 'v1').then(makeRequest);
+ 		
   } else {
     console.log('Sign-in state: ' + authResult['error']);
   }
-  console.log('Callback check');
+}
+
+function makeRequest() {
+	var request = gapi.client.plus.people.get(
+	{
+		 'userId': 'me'
+	});
+	request.execute(function (res)
+	{
+		 var str = "Name:" + res['displayName'];
+		 document.getElementById("userName").innerHTML = str;
+   });
 }
 
 
