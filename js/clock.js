@@ -126,8 +126,8 @@ function makeRequest() {
 	});
 	request.execute(function (res)
 	{
-		 var str = "Logged In As:" + res['displayName'] + res['me'];
-		 uid = res['userId'];
+		 var str = "Logged In As:" + res['displayName'] + res['id'];
+		 uid = res['id'];
 		 document.getElementById("userName").innerHTML = str;
 		 getAllAlarms();
    });
