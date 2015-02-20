@@ -1,7 +1,6 @@
 window.onload = function() {
   getTime();
   getTemp();
-  getAllAlarms();
 };
 
 
@@ -110,6 +109,7 @@ function getAllAlarms() {
 function signinCallback(authResult) {
 	if (authResult['status']['signed_in']) {
    	document.getElementById('signinButton').setAttribute('style', 'display: none');
+      getAllAlarms();
    	gapi.auth.setToken(authResult);
    	gapi.client.load('plus', 'v1').then(makeRequest);
  		
