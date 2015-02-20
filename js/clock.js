@@ -126,7 +126,7 @@ function makeRequest() {
 	});
 	request.execute(function (res)
 	{
-		 var str = "Logged In As:" + res['displayName'] + res['id'];
+		 var str = "Logged In As:" + res['displayName'];
 		 uid = res['id'];
 		 document.getElementById("userName").innerHTML = str;
 		 getAllAlarms();
