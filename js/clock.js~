@@ -2,7 +2,8 @@ window.onload = function() {
   getTime();
   getTemp();
 };
-
+ 
+var uid = -1;
 
 function getTemp() {
    $.getJSON( "https://api.forecast.io/forecast/fed31c96894876831452babdf8d14d2b/35.300399,-120.662362?callback=?", function( result ) {
@@ -62,7 +63,7 @@ function addAlarm() {
 	
 	var AlarmObject = Parse.Object.extend("Alarm");
 	 var alarmObject = new AlarmObject();
-		alarmObject.save({"alarmName": alarmName, "times" : time}, {
+		alarmObject.save({"alarmName": alarmName, "times" : time, "uid" : uid}, {
 		success: function(object) {
 		 	insertAlarm(time, alarmName);
 			hideAlarmPopup();
@@ -98,7 +99,9 @@ function getAllAlarms() {
 	query.find({
 	  success: function(results) {
 		 for (var i = 0; i < results.length; i++) { 
-		   insertAlarm(results[i].get("times"), results[i].get("alarmName"));
+		 	if(results[i].get("uid") == uid) {
+		   	insertAlarm(results[i].get("times"), results[i].get("alarmName"));
+		   }
 		 }
 	  }
 	});
@@ -109,10 +112,8 @@ function getAllAlarms() {
 function signinCallback(authResult) {
 	if (authResult['status']['signed_in']) {
    	document.getElementById('signinButton').setAttribute('style', 'display: none');
-      getAllAlarms();
    	gapi.auth.setToken(authResult);
    	gapi.client.load('plus', 'v1').then(makeRequest);
- 		
   } else {
     console.log('Sign-in state: ' + authResult['error']);
   }
@@ -125,8 +126,10 @@ function makeRequest() {
 	});
 	request.execute(function (res)
 	{
-		 var str = "Name:" + res['displayName'];
+		 var str = "Logged In As:" + res['displayName'];
+		 uid = res['userId'];
 		 document.getElementById("userName").innerHTML = str;
+		 getAllAlarms();
    });
 }
 
