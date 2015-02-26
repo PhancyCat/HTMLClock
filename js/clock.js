@@ -69,9 +69,13 @@ function addAlarm() {
 			hideAlarmPopup();
 		}
 	 });
+	 
+	ga('send', 'event', 'Alarm', 'Add');
 }
 
 function deleteAlarm() {
+	ga('send', 'event', 'Alarm', 'Delete');
+
 	var al;
 	al = $('deleter').val();
 	deleteAl(al);
