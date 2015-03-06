@@ -14,8 +14,8 @@ function theCallback() {
    $.ajax({
    url: 'https://api.imgur.com/3/account/me',
    type: 'GET',
-   beforeSend: function (xhr) {
-      xhr.setRequestHeader('Authorization', 'bearer ' + 
+   beforeSend: function (myFunc) {
+      myFunc.setRequestHeader('Authorization', 'Bearer ' + 
        window.localStorage.token);
    });
 }
