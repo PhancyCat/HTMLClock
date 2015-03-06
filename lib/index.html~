@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Lab7</title>
+        <meta charset="utf-8">
+    </head>
+    
+    <body>
+      <input type="button" value="OAuth" class="button" onclick="login()"/>
+    </body>
+    <script src="oauth.js"></script>
+ </html>
